@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ГЛАВНАЯ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/password.css">
+    <style>
+        .price-list-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 40px;
+        }
+
+        .price-list-table th,
+        .price-list-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .price-list-table th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .price-list-table tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="header">
+        <a href="index">
+            <div class="logo"><img src="img/logo.png"></div>
+        </a>
+        <div class="nav-links">
+            <a href="index">ГЛАВНАЯ СТРАНИЦА</a>
+            <a href="booking">ЗАБРОНИРОВАТЬ</a>
+            <a href="timetable">РАСПИСАНИЕ</a>
+            <a href="review">ОСТАВИТЬ ОТЗЫВ</a>
+            <a href="about">О НАС</a>
+            <a href="#" id="toggle-password-field">ДЛЯ СОТРУДНИКОВ</a>
+        </div>
+        <div class="menu-toggle">&#9776;</div>
+        <div></div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"></div>
+        <div class="overlay"></div>
+        <div class="parallax-text" data-aos="fade-down">Прогулки на сапсерфе</div>
+        <div class="parallax-text second" data-aos="fade-up">Мы познакомим вас с сапсерфом и научим плавать на нем за 10
+            минут!</div>
+        <div class="scroll-arrow" onclick="scrollToWithOffset('.services-container', 20);">
+            <img src="img/arrow-down.png">
+        </div>
+    </div>
+    <div class="services-container">
+        <h1>Услуги</h1>
+        <p>Мы предлагаем различный спектр услуг по сапсерфингу в Красноярске</p>
+
+        <div class="services-grid">
+            <div class="service hidden">
+                <img src="img/image1.png" alt="Прокат сапов">
+                <h2>Прокат сапов</h2>
+                <p>
+                    Прокат на сутки<br>
+                    1 000 ₽ день<br>
+                    1 500 ₽ сутки<br>
+                    скидки от 3 суток
+                </p>
+            </div>
+
+            <div class="service hidden">
+                <img src="img/image2.png" alt="Обучение с инструктором">
+                <h2>Обучение с инструктором</h2>
+                <p>
+                    Наш инструктор проведет инструктаж, расскажет о сапсерфе и
+                    вместе с вами отправится на прогулку до Коммунального моста<br>
+                    Стоимость: 1 400 ₽/90 минут
+                </p>
+            </div>
+
+            <div class="service hidden">
+                <img src="img/image3.png" alt="Сплавы и прогулки">
+                <h2>Сплавы и прогулки</h2>
+                <p>
+                    Организуем незабываемое путешествие по водоемам Красноярского края<br>
+                    Стоимость: Сплав по Енисею 2 500 ₽, Сплав по Мане 3 500 ₽<br>
+                    (трансфер включен в стоимость)
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="services-container second">
+        <h1>Прайс лист</h1>
+        <div class="section hidden">
+            <table class="price-list-table">
+                <thead>
+                    <tr>
+                        <th>Тип сплава</th>
+                        <th>Цена</th>
+                        <th>Время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Аренда сапов без инструктора</td>
+                        <td>600 руб.</td>
+                        <td>1 час</td>
+                    </tr>
+                    <tr>
+                        <td>Аренда сапов с инструктором</td>
+                        <td>800 руб.</td>
+                        <td>1 час</td>
+                    </tr>
+                    <tr>
+                        <td>Групповая прогулка</td>
+                        <td>1500 руб.</td>
+                        <td>2 часа</td>
+                    </tr>
+                    <tr>
+                        <td>Сплав</td>
+                        <td>2000 руб.</td>
+                        <td>3 часа</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="services-container second">
+        <div class="section hidden">
+            <div class="section-content">
+                <h2>Сплав по Енисею от Успенского монастыря до центрального парка</h2>
+                <p>
+                    Стоимость 2500 ₽.<br>
+                    Продолжительность 4 часа.<br>
+                    Трансфер включен в стоимость.<br>
+                    Выдаем все необходимое оборудование (сапсерф, спасательный жилет, весло, страховочный лиш и защитный
+                    чехол для телефона)
+                </p>
+            </div>
+
+            <div class="section-img">
+                <img src="img/section1.png" alt="Сплав по Енисею">
+            </div>
+        </div>
+
+        <div class="section hidden">
+            <div class="section-content">
+                <h2>Сплав по Мане от Мансой петли до моста через Ману</h2>
+                <p>
+                    Стоимость 3500 ₽.<br>
+                    Продолжительность 6 часов.<br>
+                    Трансфер включен в стоимость.<br>
+                    Выдаем все необходимое оборудование (сапсерф, спасательный жилет, весло, страховочный лиш и защитный
+                    чехол для телефона)
+                </p>
+            </div>
+
+            <div class="section-img">
+                <img src="img/section2.png" alt="Сплав по Мане">
+            </div>
+        </div>
+    </div>
+    <div class="booking-section hidden">
+    </div>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-auth">&times;</span>
+            <h2>Вход в список сотрудников</h2>
+            <p>Введите пароль для доступа к списку сотрудников:</p>
+            <div class="password-input">
+                <input type="password" id="password" name="password" placeholder="Введите пароль">
+                <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+            </div>
+            <button onclick="authenticate()">Войти</button>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        window.onscroll = function () {
+            const scrollY = window.scrollY;
+            const parallax = document.querySelector('.parallax');
+
+            parallax.style.backgroundPositionY = `${scrollY * 0.15}px`;
+        };
+    </script>
+    <script>
+        function scrollToWithOffset(selector, offset) {
+            const element = document.querySelector(selector);
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+                top: elementPosition - offset,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    <script>
+        window.onload = function () {
+
+            function checkVisibility() {
+                const bookingSection = document.querySelector(".booking-section");
+                const boundingBooking = bookingSection.getBoundingClientRect();
+
+                if (boundingBooking.top < window.innerHeight) {
+                    bookingSection.classList.remove("hidden");
+                    bookingSection.classList.add("visible");
+                    window.removeEventListener("scroll", checkVisibility);
+                }
+
+                document.querySelectorAll(".service, .section").forEach(element => {
+                    const bounding = element.getBoundingClientRect();
+
+                    if (bounding.top < window.innerHeight - 250) {
+                        element.classList.remove("hidden");
+                        element.classList.add("visible");
+                    }
+                });
+            }
+
+            const bookingSection = document.querySelector(".booking-section");
+            bookingSection.classList.add("hidden");
+
+            document.querySelectorAll(".service, .section").forEach(element => element.classList.add("hidden"));
+
+            checkVisibility();
+            window.addEventListener("scroll", checkVisibility);
+        };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateWidth() {
+                if (window.innerWidth <= 1000) {
+                    navLinks.style.width = (window.innerWidth + 1) + "px";
+                } else {
+                    navLinks.style.width = "";
+                }
+            }
+
+            updateWidth();
+            window.addEventListener("resize", updateWidth);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateVisibility() {
+                const screenWidth = window.innerWidth;
+
+                if (screenWidth > 1000) {
+
+                    const navLinksOpacity = getComputedStyle(navLinks).opacity;
+
+                    if (navLinksOpacity !== "1") {
+                        navLinks.style.opacity = "0";
+
+                        setTimeout(() => {
+                            navLinks.style.opacity = "1";
+                        }, 300);
+                    }
+                } else {
+                    if (navLinks) {
+                        navLinks.style.opacity = "";
+                    }
+                }
+            }
+
+            updateVisibility();
+
+            window.addEventListener("resize", updateVisibility);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.querySelector(".logo");
+            const menuToggle = document.querySelector(".menu-toggle");
+            const screenWidth = window.innerWidth;
+
+            if (logo) {
+                setTimeout(() => {
+
+                    logo.style.opacity = "1";
+                    menuToggle.style.display = "block";
+                }, 300);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const overlay = document.querySelector(".background");
+
+            if (overlay) {
+
+                overlay.style.opacity = "0";
+
+                setTimeout(() => {
+                    overlay.remove();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

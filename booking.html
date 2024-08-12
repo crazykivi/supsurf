@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>БРОНИРОВАНИЕ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <link rel="stylesheet" href="css/password.css">
+    <style>
+        .center h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 80%;
+        }
+
+        .promotion {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s;
+            width: calc(30% - 20px);
+            box-sizing: border-box;
+        }
+
+        .promotion:hover {
+            transform: translateY(-5px);
+        }
+
+        .promotion h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .promotion p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .promotion .dates {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .promotion .employee {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="header">
+        <a href="index">
+            <div class="logo"><img src="img/logo.png"></div>
+        </a>
+        <div class="nav-links">
+            <a href="index">ГЛАВНАЯ СТРАНИЦА</a>
+            <a href="booking">ЗАБРОНИРОВАТЬ</a>
+            <a href="timetable">РАСПИСАНИЕ</a>
+            <a href="review">ОСТАВИТЬ ОТЗЫВ</a>
+            <a href="about">О НАС</a>
+            <a href="#" id="toggle-password-field">ДЛЯ СОТРУДНИКОВ</a>
+        </div>
+        <div class="menu-toggle">&#9776;</div>
+        <div></div>
+    </div>
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Оформление заявки</h2>
+
+            <form id="bookingForm">
+                <input type="hidden" id="bookingId" name="bookingId">
+                <p id="bookingDatetime"></p>
+
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Номер телефона:</label>
+                <input type="text" id="phone" name="phone" placeholder="Номер телефона" required maxlength="12">
+
+                <label for="notes">Дополнительная информация:</label>
+                <textarea id="notes" name="notes"></textarea>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <div class="booking">
+        <div class="services-container first">
+            <div class="inside">
+                <h1>БРОНЬ</h1>
+                <div class="navigation-container">
+                    <button id="leftArrow" class="nav-btn">◀</button>
+                    <!--<span id="dateDisplay"></span>-->
+                    <input type="date" id="datePicker" class="date-picker">
+                    <button id="rightArrow" class="nav-btn">▶</button>
+                </div>
+                <div class="services-grid">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Время</th>
+                                <th>Оставление резерва</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <h1>Акции</h1>
+    </div>
+    <div class="container">
+        <div class="side"></div>
+        <div class="main" id="promotions-container"></div>
+        <div class="side"></div>
+    </div>
+    <div class="services-container second">
+        <div class="section hidden">
+            <div class="section-content">
+                <h2>Сплав по Енисею от Успенского монастыря до центрального парка</h2>
+                <p>
+                    Стоимость 2500 ₽.<br>
+                    Продолжительность 4 часа.<br>
+                    Трансфер включен в стоимость.<br>
+                    Выдаем все необходимое оборудование (сапсерф, спасательный жилет, весло, страховочный лиш и защитный
+                    чехол для телефона)
+                </p>
+            </div>
+
+            <div class="section-img">
+                <img src="img/section1.png" alt="Сплав по Енисею">
+            </div>
+        </div>
+
+        <div class="section hidden">
+            <div class="section-content">
+                <h2>Сплав по Мане от Мансой петли до моста через Ману</h2>
+                <p>
+                    Стоимость 3500 ₽.<br>
+                    Продолжительность 6 часов.<br>
+                    Трансфер включен в стоимость.<br>
+                    Выдаем все необходимое оборудование (сапсерф, спасательный жилет, весло, страховочный лиш и защитный
+                    чехол для телефона)
+                </p>
+            </div>
+
+            <div class="section-img">
+                <img src="img/section2.png" alt="Сплав по Мане">
+            </div>
+        </div>
+    </div>
+    <div class="booking-section hidden">
+        <h3>Записаться на прогулку:</h3>
+        <a href="booking">
+            <button class="booking-button">ЗАБРОНИРОВАТЬ</button>
+        </a>
+        <!--
+        <div class="social-links">
+            <a href="https://vk.com"><img src="img/vk.png" alt="VK"></a>
+            <a href="https://t.me"><img src="img/telegram.png" alt="Telegram"></a>
+            <a href="https://wa.me"><img src="img/whatsapp.png" alt="WhatsApp"></a>
+        </div> 
+    -->
+    </div>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-auth">&times;</span>
+            <h2>Вход в список сотрудников</h2>
+            <p>Введите пароль для доступа к списку сотрудников:</p>
+            <div class="password-input">
+                <input type="password" id="password" name="password" placeholder="Введите пароль">
+                <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+            </div>
+            <button onclick="authenticate()">Войти</button>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script src="booking.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchPromotions();
+        });
+
+        function fetchPromotions() {
+            fetch('functions/get_promotions.php')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('promotions-container');
+                    data.forEach(promotion => {
+                        const promoDiv = document.createElement('div');
+                        promoDiv.className = 'promotion';
+
+                        const promoHTML = `
+                            <h2>${promotion.promotion_name}</h2>
+                            <p class="dates">С ${promotion.start_date} по ${promotion.end_date}</p>
+                            <p>${promotion.description}</p>
+                            <p class="employee">Ответственный: ${promotion.employee_name}, ${promotion.position}</p>
+                        `;
+                        promoDiv.innerHTML = promoHTML;
+                        container.appendChild(promoDiv);
+                    });
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+    </script>
+    <script>
+        window.onload = function () {
+
+            function checkVisibility() {
+                const bookingSection = document.querySelector(".booking-section");
+                const boundingBooking = bookingSection.getBoundingClientRect();
+
+                if (boundingBooking.top < window.innerHeight) {
+                    bookingSection.classList.remove("hidden");
+                    bookingSection.classList.add("visible");
+                    window.removeEventListener("scroll", checkVisibility);
+                }
+
+                document.querySelectorAll(".service, .section").forEach(element => {
+                    const bounding = element.getBoundingClientRect();
+
+                    if (bounding.top < window.innerHeight - 250) {
+                        element.classList.remove("hidden");
+                        element.classList.add("visible");
+                    }
+                });
+            }
+
+            const bookingSection = document.querySelector(".booking-section");
+            bookingSection.classList.add("hidden");
+
+            document.querySelectorAll(".service, .section").forEach(element => element.classList.add("hidden"));
+
+            checkVisibility();
+            window.addEventListener("scroll", checkVisibility);
+        };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateWidth() {
+                if (window.innerWidth <= 1000) {
+                    navLinks.style.width = (window.innerWidth + 1) + "px";
+                } else {
+                    navLinks.style.width = "";
+                }
+            }
+
+            updateWidth();
+            window.addEventListener("resize", updateWidth);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateVisibility() {
+                const screenWidth = window.innerWidth;
+
+                if (screenWidth > 1000) {
+
+                    const navLinksOpacity = getComputedStyle(navLinks).opacity;
+
+                    if (navLinksOpacity !== "1") {
+                        navLinks.style.opacity = "0";
+
+                        setTimeout(() => {
+                            navLinks.style.opacity = "1";
+                        }, 300);
+                    }
+                } else {
+                    if (navLinks) {
+                        navLinks.style.opacity = "";
+                    }
+                }
+            }
+
+            updateVisibility();
+
+            window.addEventListener("resize", updateVisibility);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.querySelector(".logo");
+            const menuToggle = document.querySelector(".menu-toggle");
+            const screenWidth = window.innerWidth;
+
+            if (logo) {
+                setTimeout(() => {
+
+                    logo.style.opacity = "1";
+                    menuToggle.style.display = "block";
+                }, 300);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const overlay = document.querySelector(".background");
+
+            if (overlay) {
+
+                overlay.style.opacity = "0";
+
+                setTimeout(() => {
+                    overlay.remove();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О НАС</title>
+
+    <!-- Include AOS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <link rel="stylesheet" href="css/password.css">
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="header">
+        <a href="index">
+            <div class="logo"><img src="img/logo.png"></div>
+        </a>
+        <div class="nav-links">
+            <a href="index">ГЛАВНАЯ СТРАНИЦА</a>
+            <a href="booking">ЗАБРОНИРОВАТЬ</a>
+            <a href="timetable">РАСПИСАНИЕ</a>
+            <a href="review">ОСТАВИТЬ ОТЗЫВ</a>
+            <a href="about">О НАС</a>
+            <a href="#" id="toggle-password-field">ДЛЯ СОТРУДНИКОВ</a>
+        </div>
+        <div class="menu-toggle">&#9776;</div>
+        <div></div>
+    </div>
+    <div class="services-container about">
+        <h1>Добро пожаловать на SupSurf - ваш источник всего, что касается серфинга и SUP (Stand-Up Paddleboarding)!
+        </h1>
+        <p>Мы стремимся быть вашим надежным гидом в мире водных видов спорта, предоставляя самую свежую информацию о
+            местах для серфинга, обзоры на оборудование, советы для начинающих и опытных серферов, а также вдохновляющие
+            истории о приключениях на волнах.<br>
+            Наша команда состоит из энтузиастов серфинга и SUP, которые разделяют вашу страсть к этим
+            удивительным видам спорта. Мы постоянно обновляем наш сайт с новой и интересной информацией, чтобы
+            вы могли быть в курсе последних трендов, событий и новостей в мире серфинга.
+
+            Независимо от того, вы начинающий серфер или опытный профессионал, SupSurf приглашает вас
+            исследовать этот увлекательный мир вместе с нами. Давайте вместе исследовать, волноваться и
+            вдохновляться нашими приключениями на воде!
+
+            Присоединяйтесь к нам сегодня и дайте волнам возможность вас унести!</p>
+
+    </div>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-auth">&times;</span>
+            <h2>Вход в список сотрудников</h2>
+            <p>Введите пароль для доступа к списку сотрудников:</p>
+            <div class="password-input">
+                <input type="password" id="password" name="password" placeholder="Введите пароль">
+                <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+            </div>
+            <button onclick="authenticate()">Войти</button>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateWidth() {
+                if (window.innerWidth <= 1000) {
+                    navLinks.style.width = (window.innerWidth + 1) + "px";
+                } else {
+                    navLinks.style.width = "";
+                }
+            }
+
+            updateWidth();
+            window.addEventListener("resize", updateWidth);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateVisibility() {
+                const screenWidth = window.innerWidth;
+
+                if (screenWidth > 1000) {
+
+                    const navLinksOpacity = getComputedStyle(navLinks).opacity;
+
+                    if (navLinksOpacity !== "1") {
+                        navLinks.style.opacity = "0";
+
+                        setTimeout(() => {
+                            navLinks.style.opacity = "1";
+                        }, 300);
+                    }
+                } else {
+                    if (navLinks) {
+                        navLinks.style.opacity = "";
+                    }
+                }
+            }
+
+            updateVisibility();
+
+            window.addEventListener("resize", updateVisibility);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.querySelector(".logo");
+            const menuToggle = document.querySelector(".menu-toggle");
+            const screenWidth = window.innerWidth;
+
+            if (logo) {
+                setTimeout(() => {
+
+                    logo.style.opacity = "1";
+                    menuToggle.style.display = "block";
+                }, 300);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const overlay = document.querySelector(".background");
+
+            if (overlay) {
+
+                overlay.style.opacity = "0";
+
+                setTimeout(() => {
+                    overlay.remove();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

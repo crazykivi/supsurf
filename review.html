@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОТЗЫВЫ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/timetable.css">
+    <link rel="stylesheet" href="css/password.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .review-form {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            color: #fff;
+            margin-top: 200px;
+        }
+
+        .review-form h2 {
+            margin-top: 0;
+            color: #ddd;
+        }
+
+        .review-form label {
+            margin-top: 10px;
+            display: block;
+            color: #bbb;
+        }
+
+        .review-form select,
+        .review-form textarea,
+        .review-form input[type="range"],
+        .review-form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            box-sizing: border-box;
+            background: #444;
+            color: #fff;
+        }
+
+        .review-form input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: #555;
+            height: 5px;
+        }
+
+        .review-form input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #888;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .review-form button {
+            background-color: #888;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .review-form button:hover {
+            background-color: #aaa;
+        }
+
+        .review-form .rating-value {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #ddd;
+        }
+
+        .reviews-list {
+            width: 300px;
+        }
+
+        .review-item {
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .review-item p {
+            margin: 0;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .stars .star {
+            font-size: 20px;
+            color: #ffcc00;
+        }
+
+        .stars .star.grey {
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="header">
+        <a href="index">
+            <div class="logo"><img src="img/logo.png"></div>
+        </a>
+        <div class="nav-links">
+            <a href="index">ГЛАВНАЯ СТРАНИЦА</a>
+            <a href="booking">ЗАБРОНИРОВАТЬ</a>
+            <a href="timetable">РАСПИСАНИЕ</a>
+            <a href="review">ОСТАВИТЬ ОТЗЫВ</a>
+            <a href="about">О НАС</a>
+            <a href="#" id="toggle-password-field">ДЛЯ СОТРУДНИКОВ</a>
+        </div>
+        <div class="menu-toggle">&#9776;</div>
+        <div></div>
+    </div>
+    <div class="calendar-container" id="calendarContainer">
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Расписание дня</h2>
+
+            <div id="bookingDetails">
+            </div>
+        </div>
+    </div>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-auth">&times;</span>
+            <h2>Вход в список сотрудников</h2>
+            <p>Введите пароль для доступа к списку сотрудников:</p>
+            <div class="password-input">
+                <input type="password" id="password" name="password" placeholder="Введите пароль">
+                <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+            </div>
+            <button onclick="authenticate()">Войти</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="review-form">
+            <h2>Оставьте ваш отзыв</h2>
+            <form id="reviewForm">
+                <label for="instructorSelect">Выберите инструктора:</label>
+                <select id="instructorSelect" name="instructor"></select>
+
+                <label for="typeSelect">Выберите вид плавания:</label>
+                <select id="typeSelect" name="type"></select>
+
+                <label for="rating">Оценка:</label>
+                <input type="range" id="rating" name="rating" min="1" max="5" value="5">
+                <div class="rating-value" id="ratingValue">5</div>
+
+                <label for="reviewText">Ваш отзыв:</label>
+                <textarea id="reviewText" name="review" rows="4" placeholder="Напишите ваш отзыв..."></textarea>
+
+                <button type="button" onclick="submitReview()">Отправить отзыв</button>
+            </form>
+        </div>
+
+        <div class="reviews-list" id="reviewsList">
+            <h2>Последние отзывы</h2>
+            Отзывов ещё нету, вы можете быть первым!
+        </div>
+    </div>
+    <script>
+        function fetchReviews() {
+            fetch('functions/get_reviews.php')
+                .then(response => response.json())
+                .then(data => {
+                    const reviewsList = document.getElementById('reviewsList');
+                    reviewsList.innerHTML = '<h2>Последние отзывы</h2>';
+
+                    if (data.length === 0) {
+                        reviewsList.innerHTML += 'Отзывов ещё нету, вы можете быть первым!';
+                        return;
+                    }
+
+                    data.forEach(review => {
+                        const reviewItem = document.createElement('div');
+                        reviewItem.classList.add('review-item');
+
+                        const starsContainer = document.createElement('div');
+                        starsContainer.classList.add('stars');
+
+                        for (let i = 0; i < 5; i++) {
+                            const star = document.createElement('span');
+                            star.classList.add('star');
+                            star.textContent = i < review.rating ? '★' : '☆';
+                            if (i >= review.rating) {
+                                star.classList.add('grey');
+                            }
+                            starsContainer.appendChild(star);
+                        }
+
+                        const reviewText = document.createElement('p');
+                        reviewText.textContent = `Отзыв: ${review.review}`;
+
+                        const reviewType = document.createElement('p');
+                        reviewType.textContent = `Тип сплава: ${review.service}`;
+
+                        const instructorName = document.createElement('p');
+                        instructorName.textContent = `Инструктор: ${review.instructor_name}`;
+
+                        reviewItem.appendChild(starsContainer);
+                        reviewItem.appendChild(reviewType);
+                        reviewItem.appendChild(instructorName);
+                        reviewItem.appendChild(reviewText);
+                        reviewsList.appendChild(reviewItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchReviews);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchInstructors();
+            fetchTypes();
+
+            document.getElementById('rating').addEventListener('input', function () {
+                document.getElementById('ratingValue').textContent = this.value;
+            });
+        });
+
+        function fetchInstructors() {
+            fetch('functions/get_instructors.php')
+                .then(response => response.json())
+                .then(data => {
+                    const instructorSelect = document.getElementById('instructorSelect');
+                    data.forEach(instructor => {
+                        const option = document.createElement('option');
+                        option.value = instructor.id;
+                        option.textContent = instructor.name;
+                        instructorSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
+        function fetchTypes() {
+            fetch('functions/get_types.php')
+                .then(response => response.json())
+                .then(data => {
+                    const typeSelect = document.getElementById('typeSelect');
+                    data.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type.idTypes;
+                        option.textContent = type.service;
+                        typeSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
+        function submitReview() {
+            var reviewData = {
+                instructor: document.getElementById('instructorSelect').value,
+                type: document.getElementById('typeSelect').value,
+                rating: document.getElementById('rating').value,
+                review: document.getElementById('reviewText').value
+            };
+
+            // Логика отправки данных на сервер
+            fetch('functions/submit_review.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reviewData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Ваш отзыв успешно отправлен!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Произошла ошибка при отправке отзыва.');
+                });
+        }
+    </script>
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateWidth() {
+                if (window.innerWidth <= 1000) {
+                    navLinks.style.width = (window.innerWidth + 1) + "px";
+                } else {
+                    navLinks.style.width = "";
+                }
+            }
+
+            updateWidth();
+            window.addEventListener("resize", updateWidth);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateVisibility() {
+                const screenWidth = window.innerWidth;
+
+                if (screenWidth > 1000) {
+
+                    const navLinksOpacity = getComputedStyle(navLinks).opacity;
+
+                    if (navLinksOpacity !== "1") {
+                        navLinks.style.opacity = "0";
+
+                        setTimeout(() => {
+                            navLinks.style.opacity = "1";
+                        }, 300);
+                    }
+                } else {
+                    if (navLinks) {
+                        navLinks.style.opacity = "";
+                    }
+                }
+            }
+
+            updateVisibility();
+
+            window.addEventListener("resize", updateVisibility);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.querySelector(".logo");
+            const menuToggle = document.querySelector(".menu-toggle");
+            const screenWidth = window.innerWidth;
+
+            if (logo) {
+                setTimeout(() => {
+
+                    logo.style.opacity = "1";
+                    menuToggle.style.display = "block";
+                }, 300);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const overlay = document.querySelector(".background");
+
+            if (overlay) {
+
+                overlay.style.opacity = "0";
+
+                setTimeout(() => {
+                    overlay.remove();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

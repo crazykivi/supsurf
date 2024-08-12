@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РАСПИСАНИЕ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/timetable.css">
+    <link rel="stylesheet" href="css/password.css">
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="header">
+        <a href="index">
+            <div class="logo"><img src="img/logo.png"></div>
+        </a>
+        <div class="nav-links">
+            <a href="index">ГЛАВНАЯ СТРАНИЦА</a>
+            <a href="booking">ЗАБРОНИРОВАТЬ</a>
+            <a href="timetable">РАСПИСАНИЕ</a>
+            <a href="review">ОСТАВИТЬ ОТЗЫВ</a>
+            <a href="about">О НАС</a>
+            <a href="#" id="toggle-password-field">ДЛЯ СОТРУДНИКОВ</a>
+        </div>
+        <div class="menu-toggle">&#9776;</div>
+        <div></div>
+    </div>
+    <div class="calendar-container" id="calendarContainer">
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Расписание дня</h2>
+
+            <div id="bookingDetails">
+            </div>
+        </div>
+    </div>
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-auth">&times;</span>
+            <h2>Вход в список сотрудников</h2>
+            <p>Введите пароль для доступа к списку сотрудников:</p>
+            <div class="password-input">
+                <input type="password" id="password" name="password" placeholder="Введите пароль">
+                <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+            </div>
+            <button onclick="authenticate()">Войти</button>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarContainer = document.getElementById('calendarContainer');
+            const bookingModal = document.getElementById('bookingModal');
+            const closeModal = document.querySelector('.close');
+            const bookingDetails = document.getElementById('bookingDetails');
+
+            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+            const dayNames = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
+
+            let bookings = [];
+
+            const fetchBookings = () => {
+                fetch('functions/get_bookings.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        bookings = data;
+                        renderCalendar();
+                    })
+                    .catch(error => console.error('Error fetching bookings:', error));
+            };
+
+            const renderCalendar = () => {
+                calendarContainer.innerHTML = '';
+
+                let previousMonthEnd = new Date(2023, 11, 31);
+
+                for (let month = 4; month <= 7; month++) {
+                    const monthDiv = document.createElement('div');
+                    monthDiv.classList.add('month');
+
+                    const monthHeader = document.createElement('div');
+                    monthHeader.classList.add('month-header');
+                    monthHeader.textContent = monthNames[month];
+                    monthDiv.appendChild(monthHeader);
+
+                    const dayHeader = document.createElement('div');
+                    dayHeader.classList.add('day-header');
+                    dayNames.forEach(day => {
+                        const dayCell = document.createElement('span');
+                        dayCell.textContent = day;
+                        dayHeader.appendChild(dayCell);
+                    });
+                    monthDiv.appendChild(dayHeader);
+
+                    const dayGrid = document.createElement('div');
+                    dayGrid.classList.add('day-grid');
+                    const daysInMonth = new Date(2024, month + 1, 0).getDate();
+
+                    const firstDay = new Date(2024, month, 1).getDay();
+
+                    for (let i = 1; i < firstDay; i++) {
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.classList.add('day');
+                        dayGrid.appendChild(emptyDiv);
+                    }
+
+                    for (let day = 1; day <= daysInMonth; day++) {
+
+
+                        const dayDiv = document.createElement('div');
+                        dayDiv.classList.add('day');
+
+                        const dateStr = `2024-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+                        const dailyBookings = bookings.filter(b => b.date.startsWith(dateStr));
+
+                        let hasAvailable = dailyBookings.some(b => b.status === 'Available');
+                        let hasReserved = dailyBookings.some(b => b.status === 'Reserved');
+
+                        if (hasReserved && !hasAvailable) {
+                            dayDiv.classList.add('reserved');
+                        } else if (hasAvailable) {
+                            dayDiv.classList.add('available');
+                        }
+
+                        dayDiv.textContent = day.toString();
+
+                        dayDiv.addEventListener('click', () => showBookingsForDay(dateStr));
+
+                        dayGrid.appendChild(dayDiv);
+                    }
+
+                    monthDiv.appendChild(dayGrid);
+                    calendarContainer.appendChild(monthDiv);
+
+                    previousMonthEnd = new Date(2024, month, daysInMonth);
+                }
+            };
+
+            /*
+            const showBookingsForDay = dateStr => {
+                bookingDetails.innerHTML = '';
+
+                const dailyBookings = bookings.filter(b => b.date.startsWith(dateStr));
+
+                dailyBookings.forEach(booking => {
+                    const detail = document.createElement('div');
+                    const startTime = new Date(booking.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    const endTime = new Date(booking.endTime).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+                    const statusMessage = booking.status === 'Available' ? "Бронь свободна" : "Бронь занята";
+                    const serviceName = booking.service; // Используем поле service из данных бронирования
+
+                    detail.textContent = `${startTime}/${endTime} (${serviceName}) - ${statusMessage}`; // Форматируем вывод с учетом двух времен
+                    bookingDetails.appendChild(detail);
+                });
+
+                bookingModal.style.display = 'block';
+            };*/
+            const showBookingsForDay = dateStr => {
+                bookingDetails.innerHTML = '';
+                let now = new Date(); // Получаем текущее время для сравнения
+
+                const dailyBookings = bookings.filter(b => new Date(b.date) >= now && b.date.startsWith(dateStr)); // Фильтруем бронирования, которые ещё не прошли
+
+                dailyBookings.forEach(booking => {
+                    const detail = document.createElement('div');
+                    const startTime = new Date(booking.date).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    const endTime = new Date(booking.endTime).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+                    const statusMessage = booking.status === 'Available' ? "Бронь свободна" : "Бронь занята";
+                    const serviceName = booking.service;
+
+                    detail.textContent = `${startTime}/${endTime} (${serviceName}) - ${statusMessage}`;
+                    bookingDetails.appendChild(detail);
+                });
+
+                bookingModal.style.display = 'block';
+            };
+
+
+            closeModal.addEventListener('click', () => {
+                bookingModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', event => {
+                if (event.target === bookingModal) {
+                    bookingModal.style.display = 'none';
+                }
+            });
+
+            fetchBookings();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', function () {
+                navLinks.classList.toggle('show');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateWidth() {
+                if (window.innerWidth <= 1000) {
+                    navLinks.style.width = (window.innerWidth + 1) + "px";
+                } else {
+                    navLinks.style.width = "";
+                }
+            }
+
+            updateWidth();
+            window.addEventListener("resize", updateWidth);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelector(".nav-links");
+
+            function updateVisibility() {
+                const screenWidth = window.innerWidth;
+
+                if (screenWidth > 1000) {
+
+                    const navLinksOpacity = getComputedStyle(navLinks).opacity;
+
+                    if (navLinksOpacity !== "1") {
+                        navLinks.style.opacity = "0";
+
+                        setTimeout(() => {
+                            navLinks.style.opacity = "1";
+                        }, 300);
+                    }
+                } else {
+                    if (navLinks) {
+                        navLinks.style.opacity = "";
+                    }
+                }
+            }
+
+            updateVisibility();
+
+            window.addEventListener("resize", updateVisibility);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const logo = document.querySelector(".logo");
+            const menuToggle = document.querySelector(".menu-toggle");
+            const screenWidth = window.innerWidth;
+
+            if (logo) {
+                setTimeout(() => {
+
+                    logo.style.opacity = "1";
+                    menuToggle.style.display = "block";
+                }, 300);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const overlay = document.querySelector(".background");
+
+            if (overlay) {
+
+                overlay.style.opacity = "0";
+
+                setTimeout(() => {
+                    overlay.remove();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

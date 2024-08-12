@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Добавление расширения .php, если файл существует
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Проверяем, что файл или директория физически не существуют
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Все запросы направляем на index.php внутри директории supsurf
+RewriteRule index [R=301,L]
