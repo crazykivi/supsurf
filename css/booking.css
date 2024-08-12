@@ -1,0 +1,307 @@
+.booking .services-container {
+    margin-top: 140px;
+    text-align: center;
+}
+
+.services-grid {
+    padding: 20px;
+    display: inline-block;
+}
+
+#dataTable {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: table;
+}
+
+#dataTable th,
+#dataTable td {
+    padding: 12px 16px;
+    border: 0.1px solid #ddd;
+    text-align: center;
+}
+
+#dataTable th {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-weight: bold;
+    border-radius: 40px;
+}
+
+#dataTable tr:hover {
+    background-color: #e0e0e0;
+}
+
+#dataTable td {
+    border-radius: 40px;
+}
+
+#dataTable td a {
+    color: rgba(0, 0, 0, 0.9);
+    text-decoration: none;
+}
+
+#dataTable td a:hover {
+    text-decoration: underline;
+}
+
+.navigation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.nav-btn {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: none;
+    padding: 10px 15px 10px;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 60px;
+}
+
+.nav-btn:hover {
+    background-color: rgb(90, 90, 90);
+}
+
+.date-picker {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.services-grid {
+    padding: 20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 1000px) {
+    .modal {
+        top: 100px;
+    }
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+    float: right;
+}
+
+.close:hover {
+    color: #555;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input,
+form textarea {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+form button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+form button:hover {
+    background-color: rgb(90, 90, 90);
+
+}
+
+.calendar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 180px;
+}
+
+.month {
+    width: 20%;
+    min-width: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+}
+
+.month-header {
+    text-align: center;
+
+    font-weight: bold;
+
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.day-header span {
+    font-size: 0.8em;
+}
+
+.day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+    padding: 5px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.day.available {
+    background-color: #90ee90;
+}
+
+.day.reserved {
+    background-color: #ff6347;
+}
+
+.day:hover {
+    background-color: #e0e0e0;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #fff;
+
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+}
+
+@media screen and (max-width: 1000px) {
+    .modal-content {
+        margin: 35% auto;
+    }
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+    float: right;
+}
+
+.close:hover {
+    color: #555;
+}
+
+.services-container.about {
+    margin-top: 120px;
+    background-color: #ffffff;
+}
+.services-container.about h1 {
+    font-size: 5vh;
+    line-height: 1.5cm;
+}
+.services-container.about p {
+    font-size: 4vh;
+    line-height: 1cm;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 102;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.password-input input[type="password"] {
+    width: calc(100% - 30px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.password-input .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    cursor: pointer;
+}
